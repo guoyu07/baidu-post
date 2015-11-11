@@ -52,11 +52,17 @@ class BaiduPost
             return false;
         }
 
-        $cats = $_POST['post_category'];
-        $cats = array_filter($cats);
+        $cats = isset($_POST['post_category']) ? $_POST['post_category'] : '';
+        if(is_array($cats) && $cats){
+            $cats = array_filter($cats);
+        }
+
         $cat_urls = array();
-        foreach ($cats as $catid) {
-            $cat_urls[] = get_category_link($catid);
+        if($cats){
+            $cat_urls = array();
+            foreach ($cats as $catid) {
+                $cat_urls[] = get_category_link($catid);
+            }
         }
 
         //要提交百度的链接
